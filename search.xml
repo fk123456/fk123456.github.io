@@ -284,4 +284,13 @@
         <tag>框架搭建</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java多线程核心编程二</title>
+    <url>/2021/02/25/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%BA%8C/</url>
+    <content><![CDATA[<h1 id="对象及变量的并发访问"><a href="#对象及变量的并发访问" class="headerlink" title="对象及变量的并发访问"></a>对象及变量的并发访问</h1><h2 id="synchronized同步方法"><a href="#synchronized同步方法" class="headerlink" title="synchronized同步方法"></a>synchronized同步方法</h2><h2 id="synchronized同步语句块"><a href="#synchronized同步语句块" class="headerlink" title="synchronized同步语句块"></a>synchronized同步语句块</h2><h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2>]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>java并发</tag>
+      </tags>
+  </entry>
 </search>
