@@ -149,7 +149,55 @@
 </ol>
 </li>
 </ol>
-<h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3>
+<h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2><ol>
+<li>主要作用是使变量在多个线程间可见。</li>
+</ol>
+<h3 id="volatile和死循环"><a href="#volatile和死循环" class="headerlink" title="volatile和死循环"></a>volatile和死循环</h3><ol>
+<li><p>volatile的主要作用是使变量在多个线程间可见。</p>
+</li>
+<li><p>举例说明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">              	System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.method();</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>发现该方法一直处于while循环，导致程序不能继续执行后面的代码。</li>
+</ol>
+</li>
+<li><p>解决同步死循环</p>
+<ol>
+<li><p>举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        <span class="keyword">new</span> Thread(method).start();</span><br><span class="line">        System.out.println(<span class="string">&quot;I want this stop&quot;</span>);</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I want <span class="keyword">this</span> stop</span><br><span class="line">method</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上述方法运行在-server服务器模式中64bit的JVM上时会出现死循环，因为flag存在与公共堆栈及线程的私有堆栈中，-server模式时JVM为了线程运行的效率，线程一直在私有堆栈中取得flag的值是true，所有会造成死循环，建议采用volatile。</p>
+</li>
+</ol>
+</li>
+<li><p>使用volatile解决死循环</p>
+<ol>
+<li><p>使用volatile强制从公共堆栈中取得变量的值，而不是从线程私有数据栈中取得变量的值。</p>
+</li>
+<li><p>举例说明：（其它代码如上）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>synchronized和volatile比较：</p>
+<ol>
+<li>volatile是线程同步的轻量级实现，性能略高于synchronized，并且volatile只能修饰变量，二synchronized可以修饰方法和代码块。</li>
+<li>多线程访问volatile不会造成阻塞，synchronized会出现阻塞。</li>
+<li>volatile保证数据的可见性，但不保证原子性；synchronized保证原子性的同时也保证可见性，因为它将私有内存和公共内存中的数据做同步。</li>
+<li>volatile解决的是变量在多个线程之间的可见性，synchronized解决的是多个线程之间访问资源的同步性。</li>
+</ol>
+</li>
+</ol>
+
     </div>
 
     
