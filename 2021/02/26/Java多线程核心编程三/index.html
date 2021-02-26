@@ -34,7 +34,19 @@
         <hr>
     </div>
     <div class="post-content">
-        <h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2>
+        <h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2><h3 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h3><ol>
+<li>wait()：使当前执行代码的线程进行等待，wait()方法是Object类的方法。<ol>
+<li>在调用wait()方法之前，线程必须获得该对象的对象级别锁，即在同步方法或同步块中调用。</li>
+<li>调用wait()方法之后，线程会释放锁。</li>
+</ol>
+</li>
+<li>notify()：通知那些等待对象锁的线程。notify()方法是Object类的方法。<ol>
+<li>在调用notify()方法之前，线程必须获得该对象的对象级别锁，即在同步方法或同步块中调用。</li>
+<li>调用notify()方法之后，当前线程不会马上释放该对象锁，而是等退出了同步代码块之后，才释放锁，而呈wait状态的线程会开始争抢锁。</li>
+</ol>
+</li>
+</ol>
+
     </div>
 
     
