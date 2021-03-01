@@ -58,6 +58,124 @@
     <content><![CDATA[<h2 id="Shell概述"><a href="#Shell概述" class="headerlink" title="Shell概述"></a>Shell概述</h2><ol>
 <li>需要看懂运维人员编写的Shell程序。</li>
 <li>需要编写一些简单Shell程序来管理集群，提高开发效率。</li>
+<li>Shell是一个命令行解释器，接受应用程序命令，调用系统内核。</li>
+</ol>
+<h2 id="Shell解析器"><a href="#Shell解析器" class="headerlink" title="Shell解析器"></a>Shell解析器</h2><ol>
+<li><p>linux提供的Shell解析器有：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/sbin/nologin</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/tcsh</span><br><span class="line">/bin/csh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bash和sh的关系</p>
+<ol>
+<li>其实就是一个软连接</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll | grep bash</span><br><span class="line"></span><br><span class="line">sh -&gt; bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>centos默认的解析器是bash</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Shell脚本入门"><a href="#Shell脚本入门" class="headerlink" title="Shell脚本入门"></a>Shell脚本入门</h2><ol>
+<li><p>脚本格式</p>
+<ol>
+<li>脚本以<code>#!/bin/bash</code>开头（指定解析器）</li>
+</ol>
+</li>
+<li><p>第一个Shell脚本：helloworld</p>
+<ol>
+<li>创建文件<code> touch helloworld.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &#x27;hello world&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行脚本 <code>sh helloworld.sh</code></li>
+</ol>
+</li>
+<li><p>第二个Shell脚本：在/home/foreign/datas目录下创建banzhang.txt，在banzhang.txt文件中加“I Love Coder”</p>
+<ol>
+<li>创建文件 <code>touch batch.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/foreign/datas</span><br><span class="line"></span><br><span class="line">touch banzhang.txt</span><br><span class="line"></span><br><span class="line">echo &quot;I Love Coder&quot; &gt;&gt; banzhang.txt</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行脚本 <code>sh batch.sh</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="Shell中的变量"><a href="#Shell中的变量" class="headerlink" title="Shell中的变量"></a>Shell中的变量</h2><ol>
+<li><p>自定义变量（等号两侧不能有空格、环境变量名建议大写）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=2</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行变量 <code>echo $A</code></li>
+</ol>
+</li>
+<li><p>撤销变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unset A</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明静态变量（不能unset）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readonly B=3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在bash中，变量默认类型都是字符串类型，无法直接进行数值运算</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=1+1</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>输出变量 <code>echo $A</code> 结果还是1+1</li>
+</ol>
+</li>
+<li><p>变量的值如果有空格，需要双引号或单引号括起来</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27; banzhang love mm&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把变量提升为全局环境变量，可供其他Shell程序使用</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27;aaaa ss&#x27;</span><br><span class="line">export D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建bash文件 <code>touch test.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $D</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>采用export提升为全局环境变量，这样就可以在test.sh文件中使用D的变量。</li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量：-n"><a href="#特殊变量：-n" class="headerlink" title="特殊变量：$n"></a>特殊变量：$n</h2><ol>
+<li><p>基本语法</p>
+<ol>
+<li>$n（功能描述：n为数字，$0代表该脚本名称，$1-9代表第一到第九个参数，十以上的参数需要大括号包含，如${10}）</li>
+</ol>
+</li>
+<li><p>实操</p>
+<ol>
+<li>创建脚本 <code>touch parameter.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行 <code>sh parameter.sh banzhang 1 2</code> 结果 <code>parameter.sh banzhang 1 2</code> </li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量："><a href="#特殊变量：" class="headerlink" title="特殊变量：$#"></a>特殊变量：$#</h2><ol>
+<li><p> $# （功能描述：获取所有输入参数个数，常用于循环）</p>
+</li>
+<li><p>实操</p>
+<ol>
+<li>创建脚本 <code>touch parameter.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br><span class="line">echo $#</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>运行脚本<code>sh parameter.sh banzhang 1 2</code> </p>
+</li>
+<li><p>结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parameter.sh banzhang 1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
 </ol>
 ]]></content>
       <tags>
