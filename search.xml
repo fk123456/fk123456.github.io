@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Idea工具开发 SpringBoot整合JSP（毕设亲测可用）</title>
+    <url>/2021/02/24/Idea%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91-SpringBoot%E6%95%B4%E5%90%88JSP%EF%BC%88%E6%AF%95%E8%AE%BE%E4%BA%B2%E6%B5%8B%E5%8F%AF%E7%94%A8%EF%BC%89/</url>
+    <content><![CDATA[<p>因为，临近毕业了，自己虽然也学了很多框架。但是，都是在别人搭建好的基础上进行项目开发。但是springboot的官方文档上明确指出不提倡使用jsp进行前端开发，但是在校期间只学了jsp作为前端页面。所以，废话不多说，先上项目结构图。</p>
+<ol>
+<li><p>结构图:</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312203927840-140916812.png"></p>
+</li>
+<li><p>先跟大家说下项目结构：</p>
+</li>
+<li><p>webapp主要是用来放jsp页面的。</p>
+</li>
+<li><p>最下方的web文件夹是通过idea软件来生成的，自己不需要改变.</p>
+</li>
+</ol>
+<p>那就跟着博主一起来搭建一遍。</p>
+<ol start="3">
+<li>先file -&gt; new -&gt; project</li>
+</ol>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204337821-123405519.png"></p>
+<ol start="4">
+<li><p>然后可以选择Spring Initializr或者直接一个Empty Project都可以来建web项目。这里我们为了方便就使用Spring Initializr来建SpringBoot的项目。</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204352051-210383801.png"></p>
+</li>
+<li><p>之后就是next 这里需要注意一点。packaging的格式一定要采用War的形式。因为jsp只支持War包。</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204449768-175824184.png"></p>
+</li>
+<li><p>然后继续next 这里我们选择一个web，因为是一个web的项目 所以就先打勾勾了，其它的myBatis，我们可以在后期通过pom.xml文件进行添加。</p>
+</li>
+<li><p>然后选择SpringBoot的版本为1.5.10 现在的2.0刚出来。怕不稳定</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204724208-1672962843.png"></p>
+</li>
+<li><p>然后 就是next和finish。</p>
+</li>
+<li><p>这是通过第一步创建出来的项目结构图</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204859347-607098786.png"></p>
+</li>
+<li><p>TestApplication是SpringBoot的启动类。但是由于没有配置数据源，所以需要在启动类上面添加一个去除数据源的注解</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205039043-2139971107.png"></p>
+</li>
+<li><p>ServletInitializer是继承自Servlet的类，如果嫌2个类太麻烦，可以将TestApplication继承自SpringBootServletInitializer</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205208375-348061265.png"></p>
+</li>
+<li><p>改成为一个类之后是这样的。</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205246616-1147477127.png"></p>
+</li>
+<li><p>在main文件夹下面创建一个webapp。然后在webapp下创建一个WEB-INF，再在WEB-INF下创建jsp文件夹。在jsp里面建一个index.jsp文件。项目结构如下</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205453548-624879244.png"></p>
+</li>
+<li><p>在com.fangke这个包下面创建一个controller作为访问之前index.jsp的入口。</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205737109-1492406864.png"></p>
+</li>
+<li><p>TestController里面的内容为</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205836679-1045696902.png"></p>
+</li>
+<li><p>然后在application.properties文件里写访问资源路径 这里的.jsp为后缀</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312211018408-791251372.png"></p>
+</li>
+<li><p>到这一步，还是不能运行这个项目，会报404找不到页面，但是已经可以进入index()这个方法了。接下来，我们需要选择file -&gt; project structure</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210119081-616667124.png"></p>
+</li>
+<li><p>然后选择web</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210154298-1232759051.png"></p>
+</li>
+<li><p>如果没有web的话。可以点加号。添加一个web</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210231129-1283738131.png"></p>
+</li>
+<li><p>接下来就是分别配置Deployment Descriptors和Web Resource Directories</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210331021-399420468.png"></p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210343100-608873049.png"></p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210404711-1870050616.png"></p>
+</li>
+<li><p>我们需要向pom.xml文件中加入servlet依赖包以及tomcat依赖包和之前提到的myBatis的依赖包……（直接上图）</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fangke<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>test<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.10.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">spring-cloud.verson</span>&gt;</span>Dalston.SR4<span class="tag">&lt;/<span class="name">spring-cloud.verson</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- servlet 依赖包 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- JSTL (JSP standard Tag Library) JSP 标准标签库 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="comment">&lt;!-- &lt;scope&gt;provided&lt;/scope&gt;--&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.27<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.23<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!--加密字符--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="22">
+<li><p>启动这个项目，然后浏览器访问localhost:8080/index 就可以访问了（加一句静态资源需要放在resources下的static文件夹下）</p>
+<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312211102046-1302478122.png"></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>框架搭建</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java多线程核心编程三</title>
     <url>/2021/02/26/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%B8%89/</url>
     <content><![CDATA[<h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2><h3 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h3><ol>
@@ -50,337 +137,6 @@
       <tags>
         <tag>java</tag>
         <tag>java并发编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>大数据之Shell</title>
-    <url>/2021/03/01/%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%B9%8BShell/</url>
-    <content><![CDATA[<h2 id="Shell概述"><a href="#Shell概述" class="headerlink" title="Shell概述"></a>Shell概述</h2><ol>
-<li>需要看懂运维人员编写的Shell程序。</li>
-<li>需要编写一些简单Shell程序来管理集群，提高开发效率。</li>
-<li>Shell是一个命令行解释器，接受应用程序命令，调用系统内核。</li>
-</ol>
-<h2 id="Shell解析器"><a href="#Shell解析器" class="headerlink" title="Shell解析器"></a>Shell解析器</h2><ol>
-<li><p>linux提供的Shell解析器有：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/sbin/nologin</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/tcsh</span><br><span class="line">/bin/csh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>bash和sh的关系</p>
-<ol>
-<li>其实就是一个软连接</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll | grep bash</span><br><span class="line"></span><br><span class="line">sh -&gt; bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>centos默认的解析器是bash</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="Shell脚本入门"><a href="#Shell脚本入门" class="headerlink" title="Shell脚本入门"></a>Shell脚本入门</h2><ol>
-<li><p>脚本格式</p>
-<ol>
-<li>脚本以<code>#!/bin/bash</code>开头（指定解析器）</li>
-</ol>
-</li>
-<li><p>第一个Shell脚本：helloworld</p>
-<ol>
-<li>创建文件<code> touch helloworld.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &#x27;hello world&#x27;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>执行脚本 <code>sh helloworld.sh</code></li>
-</ol>
-</li>
-<li><p>第二个Shell脚本：在/home/foreign/datas目录下创建banzhang.txt，在banzhang.txt文件中加“I Love Coder”</p>
-<ol>
-<li>创建文件 <code>touch batch.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/foreign/datas</span><br><span class="line"></span><br><span class="line">touch banzhang.txt</span><br><span class="line"></span><br><span class="line">echo &quot;I Love Coder&quot; &gt;&gt; banzhang.txt</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>执行脚本 <code>sh batch.sh</code></li>
-</ol>
-</li>
-</ol>
-<h2 id="Shell中的变量"><a href="#Shell中的变量" class="headerlink" title="Shell中的变量"></a>Shell中的变量</h2><ol>
-<li><p>自定义变量（等号两侧不能有空格、环境变量名建议大写）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=2</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>执行变量 <code>echo $A</code></li>
-</ol>
-</li>
-<li><p>撤销变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unset A</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>声明静态变量（不能unset）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readonly B=3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在bash中，变量默认类型都是字符串类型，无法直接进行数值运算</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=1+1</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>输出变量 <code>echo $A</code> 结果还是1+1</li>
-</ol>
-</li>
-<li><p>变量的值如果有空格，需要双引号或单引号括起来</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27; banzhang love mm&#x27;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>把变量提升为全局环境变量，可供其他Shell程序使用</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27;aaaa ss&#x27;</span><br><span class="line">export D</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>创建bash文件 <code>touch test.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $D</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>采用export提升为全局环境变量，这样就可以在test.sh文件中使用D的变量。</li>
-</ol>
-</li>
-</ol>
-<h2 id="特殊变量：-n"><a href="#特殊变量：-n" class="headerlink" title="特殊变量：$n"></a>特殊变量：$n</h2><ol>
-<li><p>基本语法</p>
-<ol>
-<li>$n（功能描述：n为数字，$0代表该脚本名称，$1-9代表第一到第九个参数，十以上的参数需要大括号包含，如${10}）</li>
-</ol>
-</li>
-<li><p>实操</p>
-<ol>
-<li>创建脚本 <code>touch parameter.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>运行 <code>sh parameter.sh banzhang 1 2</code> 结果 <code>parameter.sh banzhang 1 2</code> </li>
-</ol>
-</li>
-</ol>
-<h2 id="特殊变量："><a href="#特殊变量：" class="headerlink" title="特殊变量：$#"></a>特殊变量：$#</h2><ol>
-<li><p> $# （功能描述：获取所有输入参数个数，常用于循环）</p>
-</li>
-<li><p>实操</p>
-<ol>
-<li>创建脚本 <code>touch parameter.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br><span class="line">echo $#</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>运行脚本<code>sh parameter.sh banzhang 1 2</code> </p>
-</li>
-<li><p>结果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parameter.sh banzhang 1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="特殊变量：-、"><a href="#特殊变量：-、" class="headerlink" title="特殊变量：$*、$@"></a>特殊变量：$*、$@</h2><ol>
-<li><p>$*（功能描述：这个变量代表命令行中所有的参数，它把所有的参数看成一个整体）</p>
-</li>
-<li><p>$@（功能描述：这个变量也代表命令行中所有的参数，它把每个参数区分对待）</p>
-</li>
-<li><p>实操</p>
-<ol>
-<li>创建脚本 <code>touch parameter.sh</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br><span class="line">echo $#</span><br><span class="line">echo $*</span><br><span class="line">echo $@</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>运行脚本<code>sh parameter.sh banzhang 1 2</code> </p>
-</li>
-<li><p>结果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parameter.sh banzhang 1 2</span><br><span class="line">3</span><br><span class="line">banzhang 1 2</span><br><span class="line">banzhang 1 2</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="特殊变量：-1"><a href="#特殊变量：-1" class="headerlink" title="特殊变量：$?"></a>特殊变量：$?</h2><ol>
-<li>$?（功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上次命令正确，如果为非0，证明上次命令执行不正确）</li>
-<li>实操<ol>
-<li>执行命令 <code>sh parameter.sh banzhang 1 2</code></li>
-<li>执行命令 <code>echo $?</code></li>
-<li>返回结果 0</li>
-</ol>
-</li>
-</ol>
-<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2>]]></content>
-      <tags>
-        <tag>大数据</tag>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java多线程核心编程二</title>
-    <url>/2021/02/25/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%BA%8C/</url>
-    <content><![CDATA[<h1 id="对象及变量的并发访问"><a href="#对象及变量的并发访问" class="headerlink" title="对象及变量的并发访问"></a>对象及变量的并发访问</h1><h2 id="synchronized同步方法"><a href="#synchronized同步方法" class="headerlink" title="synchronized同步方法"></a>synchronized同步方法</h2><ol>
-<li><p>非线程安全：</p>
-<ol>
-<li>多个线程对同一个对象中的实例变量进行并发访问时产生的。</li>
-</ol>
-</li>
-<li><p>方法内的变量是线程安全</p>
-<ol>
-<li>如果变量是方法内部的私有变量，则不存在线程安全的问题。</li>
-<li>举例：方法内部的变量</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadA</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.test(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadB</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.test(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(method);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(method);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">100</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可见方法内部的变量不存在非线程安全问题，永远都是线程安全的。</li>
-</ol>
-</li>
-<li><p>实例变量非线程安全</p>
-<ol>
-<li>如果多个线程共同访问1个对象中的实例变量，则有可能出现非线程安全问题。</li>
-<li>举例：实例变量（其它代码如上）</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可以看到test方法没有同步修饰并且两个线程操作业务对象中的实例变量，出现了非线程安全问题。</li>
-<li>解决方法：synchronized修饰（其它代码如上）</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">A num= <span class="number">100</span></span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>从打印可以看到两个线程顺序进入synchronized修饰的方法，确保了安全。</li>
-</ol>
-</li>
-<li><p>多个对象多个锁</p>
-<ol>
-<li>关键字synchronized取得的锁都是对象锁，而不是把一段代码或方法当作锁。所以造成了异步执行。</li>
-<li>举例说明：（其它代码如上）</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method methodA = <span class="keyword">new</span> Method();</span><br><span class="line">        Method methodB = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(methodA);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(methodB);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>因此需要牢牢记住“共享”这个概念，只有共享资源的读写访问才需要同步化，如果不是共享资源，那么根本没有同步的必要。</li>
-<li>A线程持有object对象的lock锁，B线程可以以异步的方式调用object对象中非synchronized类型的方法，也就是异步。</li>
-<li>A线程持有object对象的lock锁，B线程这时候如果调用object对象中的synchronized类型的方法则需要等待，也就是同步。</li>
-</ol>
-</li>
-<li><p>synchronized锁重入</p>
-<ol>
-<li>当一个线程得到一个对象锁后，再次请求此对象锁时是可以再次得到该对象的锁的。</li>
-<li>举例说明：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodA start&quot;</span>);</span><br><span class="line">        methodB();</span><br><span class="line">        System.out.println(<span class="string">&quot;methodA end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodB start&quot;</span>);</span><br><span class="line">        methodC();</span><br><span class="line">        System.out.println(<span class="string">&quot;methodB end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodC start&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;methodC end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.methodA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA();</span><br><span class="line">        threadA.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">methodA start</span><br><span class="line">methodB start</span><br><span class="line">methodC start</span><br><span class="line">methodC end</span><br><span class="line">methodB end</span><br><span class="line">methodA end</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可重入锁的概念就是，自己可以再次获取自己内部锁，并且可重入锁也支持在父子类继承环境中使用。</li>
-</ol>
-</li>
-</ol>
-<h3 id="synchronized同步语句块"><a href="#synchronized同步语句块" class="headerlink" title="synchronized同步语句块"></a>synchronized同步语句块</h3><ol>
-<li><p>当一个方法运行比较耗时，并且方法内部并不是都需要同步，则可以采用同步代码块。</p>
-</li>
-<li><p>synchronized同步代码块的使用</p>
-<ol>
-<li>当两个并发线程访问同一个对象object中的synchronized(this)同步代码块时，一段时间内只能有一个线程被执行。</li>
-<li>举例说明：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;begin = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;end = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadA</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadB</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(method);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(method);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">begin = <span class="number">1614241063700</span></span><br><span class="line">end = <span class="number">1614241065703</span></span><br><span class="line">begin = <span class="number">1614241065703</span></span><br><span class="line">end = <span class="number">1614241067705</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>从上述可以看到，虽然方法被同步代码块给锁定了，但是效率并没有提高。因为我们的代码很简单，如果碰到复杂的方法，只需要把需要锁定的代码放入代码块内，其余的代码不会受到影响。</li>
-</ol>
-</li>
-<li><p>将任意对象作为对象监视器</p>
-<ol>
-<li>对其它synchronized同步方法或synchronized(this)同步代码块调用呈阻塞状态</li>
-<li>同一时间只有一个线程可以执行synchronized同步方法或synchronized(this)同步代码块中的代码</li>
-<li>使用synchronized(非this对象x)同步代码块进行同步操作，对象监视器必须是同一个对象。</li>
-<li>使用synchronized(class)同步代码块会应用到static静态方法上，相当于对*.java文件内的所有方法都进行持锁。</li>
-<li>使用synchronized(class)静态同步代码块和synchronized(this)同步代码块，则会异步执行，一个是Class锁，一个是对象锁。</li>
-<li>使用synchronized(class)静态代码块和synchronized静态方法的效果是一样的。</li>
-<li>使用String作为同步锁，要注意JVM对String类型有常量池进行缓存，尽可能改用其它锁对象。</li>
-</ol>
-</li>
-</ol>
-<h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2><ol>
-<li>主要作用是使变量在多个线程间可见。</li>
-</ol>
-<h3 id="volatile和死循环"><a href="#volatile和死循环" class="headerlink" title="volatile和死循环"></a>volatile和死循环</h3><ol>
-<li><p>volatile的主要作用是使变量在多个线程间可见。</p>
-</li>
-<li><p>举例说明：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">              	System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.method();</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>发现该方法一直处于while循环，导致程序不能继续执行后面的代码。</li>
-</ol>
-</li>
-<li><p>解决同步死循环</p>
-<ol>
-<li><p>举例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        <span class="keyword">new</span> Thread(method).start();</span><br><span class="line">        System.out.println(<span class="string">&quot;I want this stop&quot;</span>);</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">I want <span class="keyword">this</span> stop</span><br><span class="line">method</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上述方法运行在-server服务器模式中64bit的JVM上时会出现死循环，因为flag存在与公共堆栈及线程的私有堆栈中，-server模式时JVM为了线程运行的效率，线程一直在私有堆栈中取得flag的值是true，所有会造成死循环，建议采用volatile。</p>
-</li>
-</ol>
-</li>
-<li><p>使用volatile解决死循环</p>
-<ol>
-<li><p>使用volatile强制从公共堆栈中取得变量的值，而不是从线程私有数据栈中取得变量的值。</p>
-</li>
-<li><p>举例说明：（其它代码如上）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>synchronized和volatile比较：</p>
-<ol>
-<li>volatile是线程同步的轻量级实现，性能略高于synchronized，并且volatile只能修饰变量，二synchronized可以修饰方法和代码块。</li>
-<li>多线程访问volatile不会造成阻塞，synchronized会出现阻塞。</li>
-<li>volatile保证数据的可见性，但不保证原子性；synchronized保证原子性的同时也保证可见性，因为它将私有内存和公共内存中的数据做同步。</li>
-<li>volatile解决的是变量在多个线程之间的可见性，synchronized解决的是多个线程之间访问资源的同步性。</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>java并发</tag>
       </tags>
   </entry>
   <entry>
@@ -581,90 +337,334 @@
       </tags>
   </entry>
   <entry>
-    <title>Idea工具开发 SpringBoot整合JSP（毕设亲测可用）</title>
-    <url>/2021/02/24/Idea%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91-SpringBoot%E6%95%B4%E5%90%88JSP%EF%BC%88%E6%AF%95%E8%AE%BE%E4%BA%B2%E6%B5%8B%E5%8F%AF%E7%94%A8%EF%BC%89/</url>
-    <content><![CDATA[<p>因为，临近毕业了，自己虽然也学了很多框架。但是，都是在别人搭建好的基础上进行项目开发。但是springboot的官方文档上明确指出不提倡使用jsp进行前端开发，但是在校期间只学了jsp作为前端页面。所以，废话不多说，先上项目结构图。</p>
+    <title>Java多线程核心编程二</title>
+    <url>/2021/02/25/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%BA%8C/</url>
+    <content><![CDATA[<h1 id="对象及变量的并发访问"><a href="#对象及变量的并发访问" class="headerlink" title="对象及变量的并发访问"></a>对象及变量的并发访问</h1><h2 id="synchronized同步方法"><a href="#synchronized同步方法" class="headerlink" title="synchronized同步方法"></a>synchronized同步方法</h2><ol>
+<li><p>非线程安全：</p>
 <ol>
-<li><p>结构图:</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312203927840-140916812.png"></p>
-</li>
-<li><p>先跟大家说下项目结构：</p>
-</li>
-<li><p>webapp主要是用来放jsp页面的。</p>
-</li>
-<li><p>最下方的web文件夹是通过idea软件来生成的，自己不需要改变.</p>
-</li>
+<li>多个线程对同一个对象中的实例变量进行并发访问时产生的。</li>
 </ol>
-<p>那就跟着博主一起来搭建一遍。</p>
-<ol start="3">
-<li>先file -&gt; new -&gt; project</li>
+</li>
+<li><p>方法内的变量是线程安全</p>
+<ol>
+<li>如果变量是方法内部的私有变量，则不存在线程安全的问题。</li>
+<li>举例：方法内部的变量</li>
 </ol>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204337821-123405519.png"></p>
-<ol start="4">
-<li><p>然后可以选择Spring Initializr或者直接一个Empty Project都可以来建web项目。这里我们为了方便就使用Spring Initializr来建SpringBoot的项目。</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204352051-210383801.png"></p>
-</li>
-<li><p>之后就是next 这里需要注意一点。packaging的格式一定要采用War的形式。因为jsp只支持War包。</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204449768-175824184.png"></p>
-</li>
-<li><p>然后继续next 这里我们选择一个web，因为是一个web的项目 所以就先打勾勾了，其它的myBatis，我们可以在后期通过pom.xml文件进行添加。</p>
-</li>
-<li><p>然后选择SpringBoot的版本为1.5.10 现在的2.0刚出来。怕不稳定</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204724208-1672962843.png"></p>
-</li>
-<li><p>然后 就是next和finish。</p>
-</li>
-<li><p>这是通过第一步创建出来的项目结构图</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312204859347-607098786.png"></p>
-</li>
-<li><p>TestApplication是SpringBoot的启动类。但是由于没有配置数据源，所以需要在启动类上面添加一个去除数据源的注解</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205039043-2139971107.png"></p>
-</li>
-<li><p>ServletInitializer是继承自Servlet的类，如果嫌2个类太麻烦，可以将TestApplication继承自SpringBootServletInitializer</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205208375-348061265.png"></p>
-</li>
-<li><p>改成为一个类之后是这样的。</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205246616-1147477127.png"></p>
-</li>
-<li><p>在main文件夹下面创建一个webapp。然后在webapp下创建一个WEB-INF，再在WEB-INF下创建jsp文件夹。在jsp里面建一个index.jsp文件。项目结构如下</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205453548-624879244.png"></p>
-</li>
-<li><p>在com.fangke这个包下面创建一个controller作为访问之前index.jsp的入口。</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205737109-1492406864.png"></p>
-</li>
-<li><p>TestController里面的内容为</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312205836679-1045696902.png"></p>
-</li>
-<li><p>然后在application.properties文件里写访问资源路径 这里的.jsp为后缀</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312211018408-791251372.png"></p>
-</li>
-<li><p>到这一步，还是不能运行这个项目，会报404找不到页面，但是已经可以进入index()这个方法了。接下来，我们需要选择file -&gt; project structure</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210119081-616667124.png"></p>
-</li>
-<li><p>然后选择web</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210154298-1232759051.png"></p>
-</li>
-<li><p>如果没有web的话。可以点加号。添加一个web</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210231129-1283738131.png"></p>
-</li>
-<li><p>接下来就是分别配置Deployment Descriptors和Web Resource Directories</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210331021-399420468.png"></p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210343100-608873049.png"></p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312210404711-1870050616.png"></p>
-</li>
-<li><p>我们需要向pom.xml文件中加入servlet依赖包以及tomcat依赖包和之前提到的myBatis的依赖包……（直接上图）</p>
-</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fangke<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>test<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.10.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">spring-cloud.verson</span>&gt;</span>Dalston.SR4<span class="tag">&lt;/<span class="name">spring-cloud.verson</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- servlet 依赖包 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- JSTL (JSP standard Tag Library) JSP 标准标签库 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="comment">&lt;!-- &lt;scope&gt;provided&lt;/scope&gt;--&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.27<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.23<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!--加密字符--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="22">
-<li><p>启动这个项目，然后浏览器访问localhost:8080/index 就可以访问了（加一句静态资源需要放在resources下的static文件夹下）</p>
-<p><img src="https://images2018.cnblogs.com/blog/1265109/201803/1265109-20180312211102046-1302478122.png"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadA</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.test(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadB</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.test(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(method);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(method);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可见方法内部的变量不存在非线程安全问题，永远都是线程安全的。</li>
+</ol>
+</li>
+<li><p>实例变量非线程安全</p>
+<ol>
+<li>如果多个线程共同访问1个对象中的实例变量，则有可能出现非线程安全问题。</li>
+<li>举例：实例变量（其它代码如上）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可以看到test方法没有同步修饰并且两个线程操作业务对象中的实例变量，出现了非线程安全问题。</li>
+<li>解决方法：synchronized修饰（其它代码如上）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">A num= <span class="number">100</span></span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>从打印可以看到两个线程顺序进入synchronized修饰的方法，确保了安全。</li>
+</ol>
+</li>
+<li><p>多个对象多个锁</p>
+<ol>
+<li>关键字synchronized取得的锁都是对象锁，而不是把一段代码或方法当作锁。所以造成了异步执行。</li>
+<li>举例说明：（其它代码如上）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name.equals(<span class="string">&quot;A&quot;</span>)) &#123;</span><br><span class="line">            num = <span class="number">100</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;A is over&quot;</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            num = <span class="number">200</span>;</span><br><span class="line">            System.out.println(<span class="string">&quot;B is over&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name + <span class="string">&quot; num= &quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method methodA = <span class="keyword">new</span> Method();</span><br><span class="line">        Method methodB = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(methodA);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(methodB);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">A is over</span><br><span class="line">B is over</span><br><span class="line">B num= <span class="number">200</span></span><br><span class="line">A num= <span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>因此需要牢牢记住“共享”这个概念，只有共享资源的读写访问才需要同步化，如果不是共享资源，那么根本没有同步的必要。</li>
+<li>A线程持有object对象的lock锁，B线程可以以异步的方式调用object对象中非synchronized类型的方法，也就是异步。</li>
+<li>A线程持有object对象的lock锁，B线程这时候如果调用object对象中的synchronized类型的方法则需要等待，也就是同步。</li>
+</ol>
+</li>
+<li><p>synchronized锁重入</p>
+<ol>
+<li>当一个线程得到一个对象锁后，再次请求此对象锁时是可以再次得到该对象的锁的。</li>
+<li>举例说明：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodA start&quot;</span>);</span><br><span class="line">        methodB();</span><br><span class="line">        System.out.println(<span class="string">&quot;methodA end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodB start&quot;</span>);</span><br><span class="line">        methodC();</span><br><span class="line">        System.out.println(<span class="string">&quot;methodB end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;methodC start&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;methodC end&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.methodA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA();</span><br><span class="line">        threadA.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">methodA start</span><br><span class="line">methodB start</span><br><span class="line">methodC start</span><br><span class="line">methodC end</span><br><span class="line">methodB end</span><br><span class="line">methodA end</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可重入锁的概念就是，自己可以再次获取自己内部锁，并且可重入锁也支持在父子类继承环境中使用。</li>
+</ol>
+</li>
+</ol>
+<h3 id="synchronized同步语句块"><a href="#synchronized同步语句块" class="headerlink" title="synchronized同步语句块"></a>synchronized同步语句块</h3><ol>
+<li><p>当一个方法运行比较耗时，并且方法内部并不是都需要同步，则可以采用同步代码块。</p>
+</li>
+<li><p>synchronized同步代码块的使用</p>
+<ol>
+<li>当两个并发线程访问同一个对象object中的synchronized(this)同步代码块时，一段时间内只能有一个线程被执行。</li>
+<li>举例说明：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;begin = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;end = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadA</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Method method;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadB</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.method = method;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(method);</span><br><span class="line">        threadA.start();</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(method);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">begin = <span class="number">1614241063700</span></span><br><span class="line">end = <span class="number">1614241065703</span></span><br><span class="line">begin = <span class="number">1614241065703</span></span><br><span class="line">end = <span class="number">1614241067705</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>从上述可以看到，虽然方法被同步代码块给锁定了，但是效率并没有提高。因为我们的代码很简单，如果碰到复杂的方法，只需要把需要锁定的代码放入代码块内，其余的代码不会受到影响。</li>
+</ol>
+</li>
+<li><p>将任意对象作为对象监视器</p>
+<ol>
+<li>对其它synchronized同步方法或synchronized(this)同步代码块调用呈阻塞状态</li>
+<li>同一时间只有一个线程可以执行synchronized同步方法或synchronized(this)同步代码块中的代码</li>
+<li>使用synchronized(非this对象x)同步代码块进行同步操作，对象监视器必须是同一个对象。</li>
+<li>使用synchronized(class)同步代码块会应用到static静态方法上，相当于对*.java文件内的所有方法都进行持锁。</li>
+<li>使用synchronized(class)静态同步代码块和synchronized(this)同步代码块，则会异步执行，一个是Class锁，一个是对象锁。</li>
+<li>使用synchronized(class)静态代码块和synchronized静态方法的效果是一样的。</li>
+<li>使用String作为同步锁，要注意JVM对String类型有常量池进行缓存，尽可能改用其它锁对象。</li>
+</ol>
+</li>
+</ol>
+<h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2><ol>
+<li>主要作用是使变量在多个线程间可见。</li>
+</ol>
+<h3 id="volatile和死循环"><a href="#volatile和死循环" class="headerlink" title="volatile和死循环"></a>volatile和死循环</h3><ol>
+<li><p>volatile的主要作用是使变量在多个线程间可见。</p>
+</li>
+<li><p>举例说明：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">              	System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        method.method();</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br><span class="line">method</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>发现该方法一直处于while循环，导致程序不能继续执行后面的代码。</li>
+</ol>
+</li>
+<li><p>解决同步死循环</p>
+<ol>
+<li><p>举例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;end&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Method method = <span class="keyword">new</span> Method();</span><br><span class="line">        <span class="keyword">new</span> Thread(method).start();</span><br><span class="line">        System.out.println(<span class="string">&quot;I want this stop&quot;</span>);</span><br><span class="line">        method.setFlag(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">I want <span class="keyword">this</span> stop</span><br><span class="line">method</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上述方法运行在-server服务器模式中64bit的JVM上时会出现死循环，因为flag存在与公共堆栈及线程的私有堆栈中，-server模式时JVM为了线程运行的效率，线程一直在私有堆栈中取得flag的值是true，所有会造成死循环，建议采用volatile。</p>
+</li>
+</ol>
+</li>
+<li><p>使用volatile解决死循环</p>
+<ol>
+<li><p>使用volatile强制从公共堆栈中取得变量的值，而不是从线程私有数据栈中取得变量的值。</p>
+</li>
+<li><p>举例说明：（其它代码如上）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>synchronized和volatile比较：</p>
+<ol>
+<li>volatile是线程同步的轻量级实现，性能略高于synchronized，并且volatile只能修饰变量，二synchronized可以修饰方法和代码块。</li>
+<li>多线程访问volatile不会造成阻塞，synchronized会出现阻塞。</li>
+<li>volatile保证数据的可见性，但不保证原子性；synchronized保证原子性的同时也保证可见性，因为它将私有内存和公共内存中的数据做同步。</li>
+<li>volatile解决的是变量在多个线程之间的可见性，synchronized解决的是多个线程之间访问资源的同步性。</li>
+</ol>
 </li>
 </ol>
 ]]></content>
       <tags>
-        <tag>框架搭建</tag>
+        <tag>java</tag>
+        <tag>java并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大数据之Shell</title>
+    <url>/2021/03/01/%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%B9%8BShell/</url>
+    <content><![CDATA[<h2 id="Shell概述"><a href="#Shell概述" class="headerlink" title="Shell概述"></a>Shell概述</h2><ol>
+<li>需要看懂运维人员编写的Shell程序。</li>
+<li>需要编写一些简单Shell程序来管理集群，提高开发效率。</li>
+<li>Shell是一个命令行解释器，接受应用程序命令，调用系统内核。</li>
+</ol>
+<h2 id="Shell解析器"><a href="#Shell解析器" class="headerlink" title="Shell解析器"></a>Shell解析器</h2><ol>
+<li><p>linux提供的Shell解析器有：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br><span class="line"></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/sbin/nologin</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/tcsh</span><br><span class="line">/bin/csh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bash和sh的关系</p>
+<ol>
+<li>其实就是一个软连接</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ll | grep bash</span><br><span class="line"></span><br><span class="line">sh -&gt; bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>centos默认的解析器是bash</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br><span class="line"></span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Shell脚本入门"><a href="#Shell脚本入门" class="headerlink" title="Shell脚本入门"></a>Shell脚本入门</h2><ol>
+<li><p>脚本格式</p>
+<ol>
+<li>脚本以<code>#!/bin/bash</code>开头（指定解析器）</li>
+</ol>
+</li>
+<li><p>第一个Shell脚本：helloworld</p>
+<ol>
+<li>创建文件<code> touch helloworld.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &#x27;hello world&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行脚本 <code>sh helloworld.sh</code></li>
+</ol>
+</li>
+<li><p>第二个Shell脚本：在/home/foreign/datas目录下创建banzhang.txt，在banzhang.txt文件中加“I Love Coder”</p>
+<ol>
+<li>创建文件 <code>touch batch.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cd /home/foreign/datas</span><br><span class="line"></span><br><span class="line">touch banzhang.txt</span><br><span class="line"></span><br><span class="line">echo &quot;I Love Coder&quot; &gt;&gt; banzhang.txt</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行脚本 <code>sh batch.sh</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="Shell中的变量"><a href="#Shell中的变量" class="headerlink" title="Shell中的变量"></a>Shell中的变量</h2><ol>
+<li><p>自定义变量（等号两侧不能有空格、环境变量名建议大写）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=2</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行变量 <code>echo $A</code></li>
+</ol>
+</li>
+<li><p>撤销变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unset A</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明静态变量（不能unset）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">readonly B=3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在bash中，变量默认类型都是字符串类型，无法直接进行数值运算</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A=1+1</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>输出变量 <code>echo $A</code> 结果还是1+1</li>
+</ol>
+</li>
+<li><p>变量的值如果有空格，需要双引号或单引号括起来</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27; banzhang love mm&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把变量提升为全局环境变量，可供其他Shell程序使用</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D=&#x27;aaaa ss&#x27;</span><br><span class="line">export D</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建bash文件 <code>touch test.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $D</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>采用export提升为全局环境变量，这样就可以在test.sh文件中使用D的变量。</li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量：-n"><a href="#特殊变量：-n" class="headerlink" title="特殊变量：$n"></a>特殊变量：$n</h2><ol>
+<li><p>基本语法</p>
+<ol>
+<li>$n（功能描述：n为数字，$0代表该脚本名称，$1-9代表第一到第九个参数，十以上的参数需要大括号包含，如${10}）</li>
+</ol>
+</li>
+<li><p>实操</p>
+<ol>
+<li>创建脚本 <code>touch parameter.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行 <code>sh parameter.sh banzhang 1 2</code> 结果 <code>parameter.sh banzhang 1 2</code> </li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量："><a href="#特殊变量：" class="headerlink" title="特殊变量：$#"></a>特殊变量：$#</h2><ol>
+<li><p> $# （功能描述：获取所有输入参数个数，常用于循环）</p>
+</li>
+<li><p>实操</p>
+<ol>
+<li>创建脚本 <code>touch parameter.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br><span class="line">echo $#</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>运行脚本<code>sh parameter.sh banzhang 1 2</code> </p>
+</li>
+<li><p>结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parameter.sh banzhang 1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量：-、"><a href="#特殊变量：-、" class="headerlink" title="特殊变量：$*、$@"></a>特殊变量：$*、$@</h2><ol>
+<li><p>$*（功能描述：这个变量代表命令行中所有的参数，它把所有的参数看成一个整体）</p>
+</li>
+<li><p>$@（功能描述：这个变量也代表命令行中所有的参数，它把每个参数区分对待）</p>
+</li>
+<li><p>实操</p>
+<ol>
+<li>创建脚本 <code>touch parameter.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2 $3&quot;</span><br><span class="line">echo $#</span><br><span class="line">echo $*</span><br><span class="line">echo $@</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>运行脚本<code>sh parameter.sh banzhang 1 2</code> </p>
+</li>
+<li><p>结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">parameter.sh banzhang 1 2</span><br><span class="line">3</span><br><span class="line">banzhang 1 2</span><br><span class="line">banzhang 1 2</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="特殊变量：-1"><a href="#特殊变量：-1" class="headerlink" title="特殊变量：$?"></a>特殊变量：$?</h2><ol>
+<li>$?（功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上次命令正确，如果为非0，证明上次命令执行不正确）</li>
+<li>实操<ol>
+<li>执行命令 <code>sh parameter.sh banzhang 1 2</code></li>
+<li>执行命令 <code>echo $?</code></li>
+<li>返回结果 0</li>
+</ol>
+</li>
+</ol>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2>]]></content>
+      <tags>
+        <tag>大数据</tag>
+        <tag>Shell</tag>
       </tags>
   </entry>
 </search>
