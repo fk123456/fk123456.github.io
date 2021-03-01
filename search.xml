@@ -460,18 +460,49 @@
     <title>Java多线程核心编程三</title>
     <url>/2021/02/26/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%B8%89/</url>
     <content><![CDATA[<h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2><h3 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h3><ol>
-<li>wait()：使当前执行代码的线程进行等待，wait()方法是Object类的方法。<ol>
+<li><p>wait()：使当前执行代码的线程进行等待，wait()方法是Object类的方法。</p>
+<ol>
 <li>在调用wait()方法之前，线程必须获得该对象的对象级别锁，即在同步方法或同步块中调用。</li>
 <li>调用wait()方法之后，线程会释放锁。</li>
 </ol>
 </li>
-<li>notify()：通知那些等待对象锁的线程。notify()方法是Object类的方法。<ol>
+<li><p>notify()：通知那些等待对象锁的线程。notify()方法是Object类的方法。</p>
+<ol>
 <li>在调用notify()方法之前，线程必须获得该对象的对象级别锁，即在同步方法或同步块中调用。</li>
 <li>调用notify()方法之后，当前线程不会马上释放该对象锁，而是等退出了同步代码块之后，才释放锁，而呈wait状态的线程会开始争抢锁。</li>
 </ol>
 </li>
+<li><p>举例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object lock;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadA</span><span class="params">(Object lock)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.lock = lock;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;wait begin = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                lock.wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;wait end = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object lock;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadB</span><span class="params">(Object lock)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.lock = lock;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;notify begin = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">            lock.notify();</span><br><span class="line">            System.out.println(<span class="string">&quot;notify end = &quot;</span> + System.currentTimeMillis());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Object lock = <span class="keyword">new</span> Object();</span><br><span class="line">        ThreadA threadA = <span class="keyword">new</span> ThreadA(lock);</span><br><span class="line">        threadA.start();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        ThreadB threadB = <span class="keyword">new</span> ThreadB(lock);</span><br><span class="line">        threadB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">wait begin = <span class="number">1614565730549</span></span><br><span class="line">notify begin = <span class="number">1614565732550</span></span><br><span class="line">notify end = <span class="number">1614565732550</span></span><br><span class="line">wait end = <span class="number">1614565732551</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到，wait方法被暂停了，直到2秒后被notify唤醒，并且notify访问执行结束后才执行wait方法后面的代码。</p>
+</li>
 </ol>
-]]></content>
+<h4 id="线程生命周期"><a href="#线程生命周期" class="headerlink" title="线程生命周期"></a>线程生命周期</h4><ol>
+<li>可运行状态：<ol>
+<li>新建一个新的线程对象，new Thread()，此时线程处于Runnable(可运行)状态。</li>
+</ol>
+</li>
+<li>运行状态：<ol>
+<li>CPU分配资源到这个线程，则被调用就进入了运行状态。</li>
+</ol>
+</li>
+<li>阻塞状态：<ol>
+<li>CPU时间片分配给其他线程，这时称为阻塞状态。</li>
+</ol>
+</li>
+<li>死亡状态：<ol>
+<li>线程运行结束，释放锁资源。</li>
+</ol>
+</li>
+</ol>
+<h3 id="方法join的使用"><a href="#方法join的使用" class="headerlink" title="方法join的使用"></a>方法join的使用</h3>]]></content>
       <tags>
         <tag>java</tag>
         <tag>java并发编程</tag>
