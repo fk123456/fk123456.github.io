@@ -661,7 +661,137 @@
 </ol>
 </li>
 </ol>
-<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2>]]></content>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ol>
+<li>$((运算式)) 或 $[运算式]<ol>
+<li>运行 <code>s=$[(2+3)*4]</code></li>
+</ol>
+</li>
+<li>expr +,-,*,/,% 分别代表 加，减，乘，除，取余<ol>
+<li>expr运算符间要有空格</li>
+<li>运行 <code>expr 3 + 2</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h2><h3 id="基本语法-1"><a href="#基本语法-1" class="headerlink" title="基本语法"></a>基本语法</h3><ol>
+<li>[ condition ] （主要 condition前后要有空格<ol>
+<li>条件非空即为true，[ foreign ]返回true，[ ] 返回false</li>
+</ol>
+</li>
+</ol>
+<h3 id="常用判断条件"><a href="#常用判断条件" class="headerlink" title="常用判断条件"></a>常用判断条件</h3><ol>
+<li>两个整数之间比较<ol>
+<li><code>-lt</code> 小于（less than）</li>
+<li><code>-le</code> 小于等于（less equal）</li>
+<li><code>-eq</code> 等于（equal）</li>
+<li><code>-gt</code> 大于（greater than）</li>
+<li><code>-ge</code> 大于等于（greater than）</li>
+<li><code>-ne</code> 不等于（not equal）</li>
+</ol>
+</li>
+<li>按照文件权限进行判断<ol>
+<li><code>-r</code> 有读的权限（read）</li>
+<li><code>-w</code> 有写的权限（write）</li>
+<li><code>-x</code> 有执行的权限（execute）</li>
+</ol>
+</li>
+<li>按照文件类型进行判断<ol>
+<li><code>-f</code>文件存在并且是一个常规的文件（file）</li>
+<li><code>-e</code>文件存在（existence）</li>
+<li><code>-d</code>文件存在并且是一个目录（directory）</li>
+</ol>
+</li>
+</ol>
+<h3 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h3><ol>
+<li>判断23是否大于等于22 <code>[ 23 -ge 22 ]</code> ，查看对错 <code>echo $?</code></li>
+<li>判断文件是否有写权限 [ -w parameter.sh ]</li>
+<li>判断/home/foerign/datas/parameter.sh是否存在该文件<ol>
+<li>[ -e /home/foreign/datas/parameter.sh ]</li>
+</ol>
+</li>
+<li>多条件判断（&amp;&amp; 表示前一条命令执行成功时，才执行后一条命令，|| 表示上一条命令执行失败，才执行下一条命令）<ol>
+<li><code>[ condition ] &amp;&amp; echo OK || echo NOTOK</code><ol>
+<li>输出OK</li>
+</ol>
+</li>
+<li><code>[ condition ] &amp;&amp; [ ] || ehco NOTOK</code><ol>
+<li>输出NOTOK</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="if判断"><a href="#if判断" class="headerlink" title="if判断"></a>if判断</h3><h4 id="基本语法-2"><a href="#基本语法-2" class="headerlink" title="基本语法"></a>基本语法</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ 条件判断式 ];then</span><br><span class="line">	程序</span><br><span class="line">fi</span><br><span class="line">&lt;!-- 或者 --&gt;</span><br><span class="line">if [ 条件判断式 ]</span><br><span class="line">	then</span><br><span class="line">		程序</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-1"><a href="#实操-1" class="headerlink" title="实操"></a>实操</h4><ol>
+<li><p>输入一个数字，如果是1，则输出 banzhang zhen shuai；如果是2，则输出foreign zhen shuai；如果是其它，什么也不输出</p>
+</li>
+<li><p>创建文件 <code>touch if.sh</code></p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ $1 eq 1 ]</span><br><span class="line">	then</span><br><span class="line">		echo &quot;banzhang zhen shuai&quot;</span><br><span class="line">elif [ $1 eq 2 ]</span><br><span class="line">	then</span><br><span class="line">		echo &quot;foreign zhen shuai&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h3><h4 id="基本语法-3"><a href="#基本语法-3" class="headerlink" title="基本语法"></a>基本语法</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">case $变量名 in</span><br><span class="line">	&quot;值1&quot;)</span><br><span class="line">		如果变量的值等于1，则执行程序1</span><br><span class="line">		;;</span><br><span class="line">	&quot;值2&quot;)</span><br><span class="line">		如果变量的值等于2，则执行程序2</span><br><span class="line">		;;</span><br><span class="line">		...省略其它分支...</span><br><span class="line">	*)</span><br><span class="line">		如果变量的值都不是以上的值，则执行此程序</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-2"><a href="#实操-2" class="headerlink" title="实操"></a>实操</h4><ol>
+<li>输入一个数字，如果是1，则输出banzhang，如果是2，则输出foreign，如果是其它，则输出other</li>
+<li>创建文件 touch case.sh</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">case $1 in</span><br><span class="line">	1)</span><br><span class="line">		echo &quot;banzhang&quot;</span><br><span class="line">		;;</span><br><span class="line">	2)</span><br><span class="line">		echo &quot;foreign&quot;</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		echo &quot;other&quot;</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><h4 id="基本语法1"><a href="#基本语法1" class="headerlink" title="基本语法1"></a>基本语法1</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for ((初始值;循环控制条件;变量变化))</span><br><span class="line">	do</span><br><span class="line">		程序</span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-3"><a href="#实操-3" class="headerlink" title="实操"></a>实操</h4><ol>
+<li>从1加到100</li>
+<li>创建文件 <code>touch for.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">s=0</span><br><span class="line">for ((i=1; i&lt;=100;i++))</span><br><span class="line">	do</span><br><span class="line">		s=$[$s+$i]</span><br><span class="line">  done</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本语法2"><a href="#基本语法2" class="headerlink" title="基本语法2"></a>基本语法2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for 变量 in 值1 值2 值3...</span><br><span class="line">	do</span><br><span class="line">		程序</span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-4"><a href="#实操-4" class="headerlink" title="实操"></a>实操</h4><ol>
+<li>打印所有输入参数</li>
+<li>创建文件 <code>touh for2.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">for i in $*</span><br><span class="line">	do</span><br><span class="line">		echo &quot;foreign $i&quot;</span><br><span class="line">	done</span><br><span class="line">echo &quot;---------分割线---------&quot;</span><br><span class="line">for i in $@</span><br><span class="line">	do</span><br><span class="line">		echo &quot;foreign $i&quot;</span><br><span class="line">	done</span><br><span class="line">echo &quot;---------分割线---------&quot;</span><br><span class="line">for i in &quot;$*&quot;</span><br><span class="line">	do</span><br><span class="line">		echo &quot;foreign $i&quot;</span><br><span class="line">	done</span><br><span class="line">echo &quot;---------分割线---------&quot;</span><br><span class="line">for i in &quot;$@&quot;</span><br><span class="line">	do</span><br><span class="line">		echo &quot;foreign $i&quot;</span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>调用 <code>sh for2.sh 1 2 3</code> </p>
+</li>
+<li><p>结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">foreign 1</span><br><span class="line">foreign 2</span><br><span class="line">foreign 3</span><br><span class="line">---------分割线---------</span><br><span class="line">foreign 1</span><br><span class="line">foreign 2</span><br><span class="line">foreign 3</span><br><span class="line">---------分割线---------</span><br><span class="line">foreign 1 2 3</span><br><span class="line">---------分割线---------</span><br><span class="line">foreign 1</span><br><span class="line">foreign 2</span><br><span class="line">foreign 3</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h3><h4 id="基本语法-4"><a href="#基本语法-4" class="headerlink" title="基本语法"></a>基本语法</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">while [ 条件判断式 ]</span><br><span class="line">	do</span><br><span class="line">		程序</span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-5"><a href="#实操-5" class="headerlink" title="实操"></a>实操</h4><ol>
+<li>从1加到100</li>
+<li>创建文件 <code>touch while.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">s=0</span><br><span class="line">i=1</span><br><span class="line">while [ $i -le 100 ]</span><br><span class="line">	do</span><br><span class="line">		s=$[$i+$s]</span><br><span class="line">		i=$[$i+1]</span><br><span class="line">	done</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure>
+
+<h2 id="read读取控制台输入"><a href="#read读取控制台输入" class="headerlink" title="read读取控制台输入"></a>read读取控制台输入</h2><h4 id="基本语法-5"><a href="#基本语法-5" class="headerlink" title="基本语法"></a>基本语法</h4><ol>
+<li>选项：<ol>
+<li>-p：指定读取值时的提示符</li>
+<li>-t：指定读取值时等待的时间（秒）</li>
+</ol>
+</li>
+<li>参数：<ol>
+<li>变量：指定读取值的变量名</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">read(选项)(参数)</span><br></pre></td></tr></table></figure>
+
+<h4 id="实操-6"><a href="#实操-6" class="headerlink" title="实操"></a>实操</h4><ol>
+<li>提示7秒内，读取控制台输入的名称</li>
+<li>创建文件 <code>touch read.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">read -t 7 -p &quot;Enter your name in 7 seconds &quot; NAME</span><br><span class="line">echo $NAME</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
       <tags>
         <tag>大数据</tag>
         <tag>Shell</tag>
