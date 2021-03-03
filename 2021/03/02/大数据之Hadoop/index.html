@@ -43,7 +43,117 @@
 </li>
 <li>主要解决海量数据的采集、存储和分析计算。</li>
 </ol>
-
+<h2 id="大数据特点（4V）"><a href="#大数据特点（4V）" class="headerlink" title="大数据特点（4V）"></a>大数据特点（4V）</h2><h3 id="Volume（大量）"><a href="#Volume（大量）" class="headerlink" title="Volume（大量）"></a>Volume（大量）</h3><ol>
+<li>一些大企业数据流接近EB量级</li>
+</ol>
+<h3 id="Velocify（高速）"><a href="#Velocify（高速）" class="headerlink" title="Velocify（高速）"></a>Velocify（高速）</h3><ol>
+<li>数据产生的速度非常快，像天猫双十一。</li>
+</ol>
+<h3 id="Variety（多样）"><a href="#Variety（多样）" class="headerlink" title="Variety（多样）"></a>Variety（多样）</h3><ol>
+<li>数据分为结构化（数据库/文本为主的数据）和非结构化数据（网络日志、音频、视频、地理信息等）。</li>
+</ol>
+<h3 id="Value（低价值密度）"><a href="#Value（低价值密度）" class="headerlink" title="Value（低价值密度）"></a>Value（低价值密度）</h3><ol>
+<li>快速对有价值数据“提纯”成为目前大数据背景下待解决的难题。</li>
+</ol>
+<h2 id="大数据应用场景"><a href="#大数据应用场景" class="headerlink" title="大数据应用场景"></a>大数据应用场景</h2><ol>
+<li>抖音推荐你喜欢的视频</li>
+<li>电商广告推荐你喜欢的商品</li>
+<li>人工智能</li>
+</ol>
+<h2 id="大数据发展前景"><a href="#大数据发展前景" class="headerlink" title="大数据发展前景"></a>大数据发展前景</h2><ol>
+<li>党十九大提出“推动互联网、大数据、人工智能和实体经济深度融合”。</li>
+<li>2020年初，中央推出34万亿“新基建”计划。</li>
+</ol>
+<h2 id="大数据部门间业务流程分析"><a href="#大数据部门间业务流程分析" class="headerlink" title="大数据部门间业务流程分析"></a>大数据部门间业务流程分析</h2><ol>
+<li>产品人员提需求-&gt;数据部门搭建数据平台、分析数据指标-&gt;数据可视化（报表展示、邮件发送、大屏幕展示等）</li>
+</ol>
+<h2 id="大数据部门内组织结构"><a href="#大数据部门内组织结构" class="headerlink" title="大数据部门内组织结构"></a>大数据部门内组织结构</h2><ol>
+<li>平台组<ol>
+<li>Hadoop、Flume、Kafka、HBase、Spark等框架平台搭建</li>
+<li>集群性能监控</li>
+<li>集群性能调优</li>
+</ol>
+</li>
+<li>数据仓库组<ol>
+<li>ETL工程师（数据清洗）</li>
+<li>数据分析、数据仓库建模</li>
+</ol>
+</li>
+<li>实时组<ol>
+<li>实时指标分析、性能调优</li>
+</ol>
+</li>
+<li>数据挖掘组<ol>
+<li>算法工程师</li>
+<li>推荐系统工程师</li>
+<li>用户画像工程师</li>
+</ol>
+</li>
+<li>报表开发组<ol>
+<li>JavaEE工程师</li>
+<li>前端工程师</li>
+</ol>
+</li>
+</ol>
+<h1 id="Hadoop入门"><a href="#Hadoop入门" class="headerlink" title="Hadoop入门"></a>Hadoop入门</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ol>
+<li>Hadoop是一个由Apache基金会开发的分布式系统基础架构</li>
+<li>主要解决海量数据的存储和海量数据的分析计算问题</li>
+<li>Hadoop通常是指一个更广泛的概念–Hadoop生态圈</li>
+</ol>
+<h3 id="Hadoop发展历史"><a href="#Hadoop发展历史" class="headerlink" title="Hadoop发展历史"></a>Hadoop发展历史</h3><ol>
+<li>Hadoop创始人Doug Cutting，为了实现与Google类似的全文搜索功能。</li>
+</ol>
+<h3 id="Hadoop三大发现版本"><a href="#Hadoop三大发现版本" class="headerlink" title="Hadoop三大发现版本"></a>Hadoop三大发现版本</h3><ol>
+<li>Apache版本，开源，对入门学习最好</li>
+<li>Cloudera版本，内部集成了很多大数据框架，对应产品CDH</li>
+<li>Hortonworks版本，文档齐全，对应产品HDP</li>
+</ol>
+<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><ol>
+<li>高可靠性：Hadoop底层维护多个数据副本，即使某个单元故障，也不会导致数据的丢失。</li>
+<li>高扩展性：在集群间分配任务数据，可方便的扩展数以千计的节点。</li>
+<li>高效性：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</li>
+<li>高容错性：能够自动将失败的任务重新分配。</li>
+</ol>
+<h3 id="Hadoop的组成"><a href="#Hadoop的组成" class="headerlink" title="Hadoop的组成"></a>Hadoop的组成</h3><ol>
+<li>Hadoop1.x<ol>
+<li>Common辅助工具</li>
+<li>HDFS数据存储</li>
+<li>MapReduce计算+资源调度</li>
+</ol>
+</li>
+<li>Hadoop2.x<ol>
+<li>Common辅助工具</li>
+<li>HDFS数据存储</li>
+<li>Yarn资源调度</li>
+<li>MapReduce计算</li>
+</ol>
+</li>
+<li>Hadoop3.x<ol>
+<li>在组成上没有变化</li>
+</ol>
+</li>
+<li>HDFS架构概述<ol>
+<li>Hadoop Distributed File System，是一个分布式文件系统。</li>
+<li>NameNode<ol>
+<li>负责数据存储情况概述</li>
+</ol>
+</li>
+<li>DataNode<ol>
+<li>负责存储具体数据</li>
+</ol>
+</li>
+<li>2NN<ol>
+<li>协助NameNode，每隔一段时间对它元数据备份</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>YARN架构概述<ol>
+<li></li>
+</ol>
+</li>
+</ol>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><h3 id="推荐系统案例"><a href="#推荐系统案例" class="headerlink" title="推荐系统案例"></a>推荐系统案例</h3><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="模板虚拟机准备"><a href="#模板虚拟机准备" class="headerlink" title="模板虚拟机准备"></a>模板虚拟机准备</h3><h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><h3 id="安装JDK、Hadoop"><a href="#安装JDK、Hadoop" class="headerlink" title="安装JDK、Hadoop"></a>安装JDK、Hadoop</h3><h2 id="Hadoop生产集群搭建"><a href="#Hadoop生产集群搭建" class="headerlink" title="Hadoop生产集群搭建"></a>Hadoop生产集群搭建</h2><h3 id="本地模式"><a href="#本地模式" class="headerlink" title="本地模式"></a>本地模式</h3><h3 id="完全分布式集群"><a href="#完全分布式集群" class="headerlink" title="完全分布式集群"></a>完全分布式集群</h3><h2 id="常见错误解决方案"><a href="#常见错误解决方案" class="headerlink" title="常见错误解决方案"></a>常见错误解决方案</h2>
     </div>
 
     
