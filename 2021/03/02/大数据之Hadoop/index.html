@@ -133,7 +133,7 @@
 </ol>
 </li>
 <li>HDFS架构概述<ol>
-<li>Hadoop Distributed File System，是一个分布式文件系统。</li>
+<li>全称Hadoop Distributed File System，是一个分布式文件系统。</li>
 <li>NameNode<ol>
 <li>负责数据存储情况概述</li>
 </ol>
@@ -149,11 +149,157 @@
 </ol>
 </li>
 <li>YARN架构概述<ol>
-<li></li>
+<li>全称Yet Another Resource Negotiator，是一个资源协调管理器</li>
+<li>ResourceManager：整个集群资源的管理者</li>
+<li>NodeManager：单个节点服务器资源管理者</li>
+<li>ApplicationMaster：单个任务运行的管理者</li>
+<li>Container：容器，相当于一台独立的服务器，里面封装了任务运行所需要的资源，例如内存、CPU、磁盘、网络等。</li>
+</ol>
+</li>
+<li>MapReduce架构概述<ol>
+<li>Map阶段并行处理输入数据</li>
+<li>Reduce阶段对Map结果进行汇总</li>
 </ol>
 </li>
 </ol>
-<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><h3 id="推荐系统案例"><a href="#推荐系统案例" class="headerlink" title="推荐系统案例"></a>推荐系统案例</h3><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="模板虚拟机准备"><a href="#模板虚拟机准备" class="headerlink" title="模板虚拟机准备"></a>模板虚拟机准备</h3><h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><h3 id="安装JDK、Hadoop"><a href="#安装JDK、Hadoop" class="headerlink" title="安装JDK、Hadoop"></a>安装JDK、Hadoop</h3><h2 id="Hadoop生产集群搭建"><a href="#Hadoop生产集群搭建" class="headerlink" title="Hadoop生产集群搭建"></a>Hadoop生产集群搭建</h2><h3 id="本地模式"><a href="#本地模式" class="headerlink" title="本地模式"></a>本地模式</h3><h3 id="完全分布式集群"><a href="#完全分布式集群" class="headerlink" title="完全分布式集群"></a>完全分布式集群</h3><h2 id="常见错误解决方案"><a href="#常见错误解决方案" class="headerlink" title="常见错误解决方案"></a>常见错误解决方案</h2>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><table>
+<thead>
+<tr>
+<th align="center">数据来源层</th>
+<th align="center">数据库（结构化数据）</th>
+<th align="center">文件日志（半结构化数据）</th>
+<th align="center">视频、PPT等（非结构化数据）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数据传输层</td>
+<td align="center">Sqoop数据传递</td>
+<td align="center">Flume日志收集</td>
+<td align="center">Kafka消息队列</td>
+</tr>
+<tr>
+<td align="center">数据存储层</td>
+<td align="center">HDFS</td>
+<td align="center">HDFS</td>
+<td align="center">Kafka消息队列</td>
+</tr>
+<tr>
+<td align="center">资源管理层</td>
+<td align="center">YARN</td>
+<td align="center">YARN</td>
+<td align="center">YARN</td>
+</tr>
+<tr>
+<td align="center">数据计算层</td>
+<td align="center">MapReduce离线计算<br>Hive数据查询</td>
+<td align="center">Spark Core内存计算<br>Spark Mlib数据挖掘<br>Spark Sql数据查询<br>Spark Streaming实时计算<br>Flink实时计算</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">任务调度层</td>
+<td align="center">Oozie任务调度</td>
+<td align="center">Azkaban任务调度</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">业务模型层</td>
+<td align="center">业务模型</td>
+<td align="center">数据可视化</td>
+<td align="center">业务应用</td>
+</tr>
+</tbody></table>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="模板虚拟机准备"><a href="#模板虚拟机准备" class="headerlink" title="模板虚拟机准备"></a>模板虚拟机准备</h3><ol>
+<li><p>安装epel-release</p>
+<ol>
+<li><code>yum install -y epel-release</code></li>
+</ol>
+</li>
+<li><p>关闭防火墙</p>
+<ol>
+<li><code>systemctl stop firewalld</code></li>
+<li><code>systemctl disable firewalld.service</code></li>
+</ol>
+</li>
+<li><p>创建foreign用户</p>
+<ol>
+<li>useradd foreign</li>
+<li>passed xxx</li>
+</ol>
+</li>
+<li><p>配置foreign用户具有root权限，方便后期加sudo执行root权限的命令</p>
+<ol>
+<li>在%wheel这行下面添加一行</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sudoers</span><br><span class="line">foreign ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建目录</p>
+<ol>
+<li>切换到foreign用户并且在/opt目录下新建文件夹</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir module</span><br><span class="line">sudo mkdir software</span><br><span class="line">sudo chown foreign:foreign module/ software/</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><ol>
+<li><p>配置ip地址 <code>vim /etc/sysconfig/network-scripts/ifcfg-ens33</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.168.10.102</span><br><span class="line">GATEWAY=192.168.10.2</span><br><span class="line">DNS1=192.168.10.2</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置主机名称 <code>vim /etc/hostname </code><ol>
+<li>Hadoop102</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="安装JDK、Hadoop"><a href="#安装JDK、Hadoop" class="headerlink" title="安装JDK、Hadoop"></a>安装JDK、Hadoop</h3><ol>
+<li><p>传输JDK和Hadoop到服务器上</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp hadoop-3.1.3.tar.gz root@192.168.39.129:/opt/software</span><br><span class="line">scp jdk-8u212-linux-x64.tar.gz root@192.168.39.129:/opt/software</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装JDK</p>
+<ol>
+<li><p>解压 <code>tar -zxvf jdk-8u212-linux-x64.tar.gz -C /opt/module</code></p>
+</li>
+<li><p>配置环境变量</p>
+<ol>
+<li>进入 <code>/etc/profile.d</code>目录下</li>
+<li>创建文件 <code>sudo vim my_env.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>激活环境配置 <code>source /etc/profile</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>安装Hadoop</p>
+<ol>
+<li><p>解压 <code>tar -zxvf hadoop-3.1.3.tar.gz -C /opt/module</code></p>
+</li>
+<li><p>配置环境变量</p>
+<ol>
+<li>进入 <code>/etc/profile.d</code></li>
+<li>进入文件 <code>sudo vim my_env.sh</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">HADOOP_HOME</span></span><br><span class="line">epport HADOOP_HOME=/opt/module/hadoop-3.1.3</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活环境配置 <code>source /etc/profile</code></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Hadoop生产集群搭建"><a href="#Hadoop生产集群搭建" class="headerlink" title="Hadoop生产集群搭建"></a>Hadoop生产集群搭建</h2><h3 id="本地模式"><a href="#本地模式" class="headerlink" title="本地模式"></a>本地模式</h3><h4 id="入门案例-计数文件内文字出现的次数"><a href="#入门案例-计数文件内文字出现的次数" class="headerlink" title="入门案例-计数文件内文字出现的次数"></a>入门案例-计数文件内文字出现的次数</h4><ol>
+<li>在hadoop目录下新建文件 <code>/wcinput/word.txt</code></li>
+<li>输入文件内容</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ss ss</span><br><span class="line">cls cls</span><br><span class="line">banzhang</span><br><span class="line">bobo</span><br><span class="line">yangge</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行命令 <code>hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount wcinput/ ./wcoutput</code></li>
+<li>查看运行结果 <code>cd wcoutput</code> <code>cat part-r-00000</code></li>
+</ol>
+<h3 id="完全分布式模式"><a href="#完全分布式模式" class="headerlink" title="完全分布式模式"></a>完全分布式模式</h3><h3 id><a href="#" class="headerlink" title></a></h3>
     </div>
 
     
